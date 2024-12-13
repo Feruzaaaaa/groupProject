@@ -1,6 +1,6 @@
 import telebot
 from telebot import types
-from random import choice
+from datetime import datetime, timedelta
 
 
 bot = telebot.TeleBot('7607040571:AAEtWBhazqlKXlXIxrjGN1S-uEWHntcEjCM')
@@ -42,11 +42,72 @@ def help(message):
                                       f"or question regarding our bot, please reach out to <u>Admin</u>", reply_markup=markup, parse_mode='html')
 
 
+schedule_data = {
+    "2024-11-20": {
+        "Classroom 101": {
+            "09:00–10:00": "Booked",
+            "10:00–11:00": "Available",
+            "11:00–12:00": "Booked"
+        },
+        "Classroom 102": {
+            "09:00–12:00": "Available"
+        }
+    },
+    "2024-11-21": {
+        "Classroom 101": {
+            "09:00–10:00": "Available",
+            "10:00–12:00": "Booked"
+        }
+    }
+}
+
+
+
+def format_schedule(date):
+    if date not in schedule_data:
+        return f"No bookings found for {date}. All classrooms are available!"
+
+    schedule = schedule_data[date]
+    result = [f"📅 Schedule for {date}:\n"]
+    for classroom, timeslots in schedule.items():
+        result.append(f"Classroom {classroom}:")
+        for timeslot, status in timeslots.items():
+            result.append(f"  - {timeslot}: {status}")
+        result.append("")
+    return "\n".join(result)
 
 
 @bot.message_handler(commands=['schedule'])
-def schedule(message):
-    bot.send_message(message.chat.id, "Here is the current schedule:\n\n\n\n.")
+def handle_schedule_command(message):
+    # Display today's schedule by default
+    today = datetime.now().strftime("%Y-%m-%d")
+    send_schedule(message.chat.id, today)
+
+
+def send_schedule(chat_id, date):
+
+    formatted_schedule = format_schedule(date)
+
+
+    markup = types.InlineKeyboardMarkup()
+    prev_date = (datetime.strptime(date, "%Y-%m-%d") - timedelta(days=1)).strftime("%Y-%m-%d")
+    next_date = (datetime.strptime(date, "%Y-%m-%d") + timedelta(days=1)).strftime("%Y-%m-%d")
+    markup.add(
+        types.InlineKeyboardButton("⬅️ Previous Day", callback_data=f"schedule:{prev_date}"),
+        types.InlineKeyboardButton("Next Day ➡️", callback_data=f"schedule:{next_date}")
+    )
+    markup.add(types.InlineKeyboardButton("📅 Book a Classroom", callback_data="book"))
+
+
+    bot.send_message(chat_id, formatted_schedule, reply_markup=markup)
+
+
+
+@bot.callback_query_handler(func=lambda call: call.data.startswith("schedule:"))
+def handle_schedule_navigation(call):
+
+    _, date = call.data.split(":")
+    send_schedule(call.message.chat.id, date)
 
 
 @bot.message_handler(commands=['book'])
