@@ -1,28 +1,28 @@
-# ClassroomApp 📚
+ClassroomApp 📚
+ClassroomApp is an Android application designed to display a list of students and their achievements. It can be used as a tool to assess students' potential, identify future leaders, and present them to senior management.
 
-ClassroomApp — это Android-приложение, предназначенное для отображения списка студентов и их достижений. Оно может использоваться как инструмент для оценки потенциала учащихся, выявления будущих лидеров и представления их высшему руководству.
+🧩 Features
+📋 Atamtaeva Feruza, Kubatov Kairat, Fariza Movlodova, Fotima
 
-## 🧩 Функциональность
 
-- 📋 Отображение списка студентов
-- 🏆 Отображение достижений студентов в виде карточек
-- 🎓 Информация о выпускном годе и факультете
-- Темная тема оформления для комфорта глаз
+🎓 Computer Science, 2028
 
-## 📸 Скриншоты
+Dark theme for eye comfort
 
-(Добавь сюда скриншоты из приложения, если они есть)
+📸 Screenshots
+![image](https://github.com/user-attachments/assets/d7650cab-0e49-42e9-9b3e-9ee52e780047)
 
-## 🛠️ Стек технологий
 
-- **Язык:** Java / Kotlin (уточни)
-- **Среда разработки:** IntelliJ IDEA / Android Studio
-- **UI:** XML Layouts
-- **Целевая платформа:** Android
+🛠️ Tech Stack
+Language: Java 
 
-## 🔧 Как запустить
+Development Environment: IntelliJ IDEA / Android Studio
 
-1. Клонируй репозиторий:
+UI: XML Layouts
 
+Target Platform: Android
+
+🔧 How to Run
+Clone the repository:
    ```bash
    https://github.com/Feruzaaaaa/groupProject/new/programming
